@@ -1,0 +1,11 @@
+{
+  "name": "canvas-starter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Benjamin Mildren <mildrenben@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^3.7.2"
+  }
+}
