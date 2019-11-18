@@ -117,122 +117,74 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"index.ts":[function(require,module,exports) {
-var canvas = document.querySelector("canvas");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-var context = canvas.getContext("2d");
-var STANDARD_VELOCITY = 1;
-var STANDARD_RADIUS = 10;
-var MINIMUM_RADIUS = 3;
-var MAXIMUM_RADIUS = 50;
-var CANVAS_WIDTH = window.innerWidth;
-var CANVAS_HEIGHT = window.innerHeight;
-var COLORS = ["#725752", "#878E88", "#F0544F", "#FDF0D5", "#BBE1C3"];
-var mouse = {
-  x: undefined,
-  y: undefined
-};
-document.addEventListener("mousemove", function (_a) {
-  var x = _a.x,
-      y = _a.y;
-  mouse.x = x;
-  mouse.y = y;
-});
+})({"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-var Entity =
-/** @class */
-function () {
-  function Entity(x, y, xvelocity, yvelocity, color, radius) {
-    // Radius minimum
-    if (radius < MINIMUM_RADIUS) {
-      radius = MINIMUM_RADIUS;
-    } // Correct collisions with edge of canvas
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
 
+  return bundleURL;
+}
 
-    if (x < radius) {
-      this.x = radius;
-    } else if (x > CANVAS_WIDTH - radius) {
-      this.x = CANVAS_WIDTH - radius;
-    } else {
-      this.x = x;
-    } // Correct collisions with edge of canvas
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
 
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
 
-    if (y < radius) {
-      this.y = radius;
-    } else if (y > CANVAS_WIDTH - radius) {
-      this.y = CANVAS_WIDTH - radius;
-    } else {
-      this.y = y;
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
     }
 
-    this.xvelocity = xvelocity;
-    this.yvelocity = yvelocity;
-    this.color = color;
-    this.id = state.length;
-    this.radius = radius;
-    this.original_radius = radius;
-  }
-
-  Entity.prototype.update = function () {
-    // X
-    if (this.x > CANVAS_WIDTH - this.radius || this.x < 0 + this.radius) {
-      this.xvelocity = this.xvelocity * -1;
-    } // Y
-
-
-    if (this.y > CANVAS_HEIGHT - this.radius || this.y < 0 + this.radius) {
-      this.yvelocity = this.yvelocity * -1;
-    } // Grow/shrink
-
-
-    if (mouse.x + 50 >= this.x && mouse.x - 50 <= this.x && mouse.y + 50 >= this.y && mouse.y - 50 <= this.y && !(this.radius >= MAXIMUM_RADIUS)) {
-      this.radius = this.radius + 2;
-    } else if (this.radius > this.original_radius) {
-      this.radius = this.radius - 2;
-    } // Update velocities
-
-
-    this.x = this.x + this.xvelocity;
-    this.y = this.y + this.yvelocity;
-  };
-
-  Entity.prototype.render = function () {
-    context.beginPath();
-    context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    context.fillStyle = this.color;
-    context.fill();
-  };
-
-  return Entity;
-}();
-
-var state = [];
-
-function clear() {
-  context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    cssTimeout = null;
+  }, 50);
 }
 
-function animate() {
-  requestAnimationFrame(animate);
-  clear();
-  state.forEach(function (entity) {
-    entity.update();
-    entity.render();
-  });
-}
-
-function init() {
-  for (var i = 1; i < 800; i++) {
-    state.push(new Entity(Math.random() * CANVAS_WIDTH, Math.random() * CANVAS_HEIGHT, Math.random() * STANDARD_VELOCITY * (Math.random() > 0.5 ? 1 : -1), Math.random() * STANDARD_VELOCITY * (Math.random() > 0.5 ? 1 : -1), COLORS[Math.floor(Math.random() * COLORS.length)], Math.random() * STANDARD_RADIUS));
-  }
-
-  animate();
-}
-
-init();
-},{}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+module.exports = reloadCSS;
+},{"./bundle-url":"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -436,5 +388,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","index.ts"], null)
-//# sourceMappingURL=/canvas-starter.77de5100.js.map
+},{}]},{},["../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/index.js.map
