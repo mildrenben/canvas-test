@@ -1,4 +1,4 @@
-import Entity, { IEntity } from "./Entity";
+import Circle, { ICircle } from "./Circle";
 import context from "../utilities/context";
 import mouse from "../utilities/mouse";
 
@@ -7,19 +7,12 @@ const MAXIMUM_RADIUS: number = 50;
 const CANVAS_WIDTH: number = window.innerWidth;
 const CANVAS_HEIGHT: number = window.innerHeight;
 
-interface IGrowingCircle extends IEntity {
-  color: string;
-  radius: number;
-}
-
-export default class GrowingCircle extends Entity {
-  color: string;
-  radius: number;
+export default class GrowingCircle extends Circle {
   original_radius: number;
-  constructor(options: IGrowingCircle) {
+  constructor(options: ICircle) {
     super(options);
 
-    let { x, y, radius, color } = options;
+    let { x, y, radius } = options;
 
     // Radius minimum
     if (radius < MINIMUM_RADIUS) {
@@ -42,11 +35,9 @@ export default class GrowingCircle extends Entity {
       this.y = y;
     }
 
-    this.color = color;
-    this.radius = radius;
     this.original_radius = radius;
   }
-  update() {
+  update(): void {
     // X
     if (this.x > CANVAS_WIDTH - this.radius || this.x < 0 + this.radius) {
       this.xvelocity = this.xvelocity * -1;
@@ -74,10 +65,7 @@ export default class GrowingCircle extends Entity {
     this.x = this.x + this.xvelocity;
     this.y = this.y + this.yvelocity;
   }
-  render() {
-    context.beginPath();
-    context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    context.fillStyle = this.color;
-    context.fill();
+  render(): void {
+    super.render();
   }
 }
