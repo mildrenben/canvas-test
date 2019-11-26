@@ -1,6 +1,7 @@
 import context from "../utilities/context";
 import { EntityManager } from "../pages/staticCircleCollision";
-import { INITIAL_COLOR } from "./StaticCircle";
+import Entity from "./Entity";
+const INITIAL_COLOR: string = "#CFBAE1";
 
 export default class Line {
   update() {

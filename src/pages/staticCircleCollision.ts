@@ -26,9 +26,25 @@ function animate(): void {
 }
 
 function init(): void {
-  EntityManager[0] = new StaticCircle(150, 150, 0, 40);
-  EntityManager[1] = new StaticCircle(450, 450, 1, 40);
-  EntityManager[2] = new Line({ x: 5, y: 5 }, { x: 100, y: 200 });
+  EntityManager[0] = new StaticCircle({
+    x: 150,
+    y: 150,
+    id: 0,
+    radius: 40,
+    color: "#CFBAE1",
+    xvelocity: 0,
+    yvelocity: 0
+  });
+  EntityManager[1] = new StaticCircle({
+    x: 450,
+    y: 450,
+    id: 1,
+    radius: 40,
+    color: "#CFBAE1",
+    xvelocity: 0,
+    yvelocity: 0
+  });
+  EntityManager[2] = new Line();
   animate();
 }
 

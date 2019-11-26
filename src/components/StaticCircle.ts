@@ -1,27 +1,12 @@
+import Circle, { ICircle } from "./Circle";
 import canvas from "../utilities/canvas";
-import context from "../utilities/context";
 import mouse from "../utilities/mouse";
 import { EntityManager } from "../pages/staticCircleCollision";
 
-const MINIMUM_RADIUS: number = 3;
-const MAXIMUM_RADIUS: number = 50;
-const CANVAS_WIDTH: number = window.innerWidth;
-const CANVAS_HEIGHT: number = window.innerHeight;
-export const INITIAL_COLOR: string = "#CFBAE1";
-
-export default class StaticCircle {
-  x: number;
-  y: number;
-  id: number;
-  radius: number;
-  color: string;
+export default class StaticCircle extends Circle {
   isMoving: boolean;
-  constructor(x: number, y: number, id: number, radius: number) {
-    this.x = x;
-    this.y = y;
-    this.id = id;
-    this.radius = radius;
-    this.color = INITIAL_COLOR;
+  constructor(options: ICircle) {
+    super(options);
     this.isMoving = false;
   }
   update() {
@@ -54,9 +39,6 @@ export default class StaticCircle {
     }
   }
   render() {
-    context.beginPath();
-    context.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    context.fillStyle = this.color;
-    context.fill();
+    super.render();
   }
 }
