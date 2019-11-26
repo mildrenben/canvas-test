@@ -2,7 +2,7 @@ import canvas from "../utilities/canvas";
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 import context from "../utilities/context";
-import Circle from "../components/Circle";
+import GrowingCircle from "../components/GrowingCircle";
 
 const STANDARD_VELOCITY: number = 1;
 const STANDARD_RADIUS: number = 10;
@@ -17,7 +17,7 @@ const COLORS: string[] = [
   "#BBE1C3"
 ];
 
-let state: Circle[] = [];
+let state: GrowingCircle[] = [];
 
 function clear(): void {
   context.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -35,15 +35,17 @@ function animate(): void {
 function init(): void {
   for (let i = 1; i < 800; i++) {
     state.push(
-      new Circle(
-        Math.random() * CANVAS_WIDTH,
-        Math.random() * CANVAS_HEIGHT,
-        Math.random() * STANDARD_VELOCITY * (Math.random() > 0.5 ? 1 : -1),
-        Math.random() * STANDARD_VELOCITY * (Math.random() > 0.5 ? 1 : -1),
-        COLORS[Math.floor(Math.random() * COLORS.length)],
-        Math.random() * STANDARD_RADIUS,
-        state.length
-      )
+      new GrowingCircle({
+        x: Math.random() * CANVAS_WIDTH,
+        y: Math.random() * CANVAS_HEIGHT,
+        xvelocity:
+          Math.random() * STANDARD_VELOCITY * (Math.random() > 0.5 ? 1 : -1),
+        yvelocity:
+          Math.random() * STANDARD_VELOCITY * (Math.random() > 0.5 ? 1 : -1),
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+        radius: Math.random() * STANDARD_RADIUS,
+        id: state.length
+      })
     );
   }
   animate();
